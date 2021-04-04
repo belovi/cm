@@ -131,6 +131,7 @@ func initFlags() {
 	} {
 		c.Flags().StringVarP(&version, "version", "v", selenoid.Latest, "desired version; default is latest release")
 		c.Flags().StringVarP(&registry, "registry", "r", selenoid.DefaultRegistryUrl, "Docker registry to use")
+		c.Flags().StringVarP(&imagePrefix, "image-prefix", "", "", "Optional prefix to form a fully-qualified image name")
 	}
 	for _, c := range []*cobra.Command{
 		selenoidConfigureCmd,
@@ -196,6 +197,7 @@ func createLifecycle(configDir string, port uint16) (*selenoid.Lifecycle, error)
 
 		LastVersions: lastVersions,
 		RegistryUrl:  registry,
+		ImagePrefix:  imagePrefix,
 		BrowsersJson: browsersJson,
 		ShmSize:      shmSize,
 		Tmpfs:        tmpfs,

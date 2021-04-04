@@ -8,6 +8,7 @@ import (
 var (
 	quiet    bool
 	registry string
+	imagePrefix string
 	rootCmd  = &cobra.Command{
 		Use:   "cm",
 		Short: "cm is a configuration management tool for Aerokube products",

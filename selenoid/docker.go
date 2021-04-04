@@ -80,6 +80,7 @@ type DockerConfigurator struct {
 	LastVersions int
 	Pull         bool
 	RegistryUrl  string
+	ImagePrefix  string
 	BrowsersJson string
 	ShmSize      int
 	Tmpfs        int
@@ -105,6 +106,7 @@ func NewDockerConfigurator(config *LifecycleConfig) (*DockerConfigurator, error)
 		LogsAware:              LogsAware{DisableLogs: config.DisableLogs},
 		GracefulAware:          GracefulAware{Graceful: config.Graceful, GracefulTimeout: config.GracefulTimeout},
 		RegistryUrl:            config.RegistryUrl,
+		ImagePrefix:            config.ImagePrefix,
 		BrowsersJson:           config.BrowsersJson,
 		LastVersions:           config.LastVersions,
 		ShmSize:                config.ShmSize,
@@ -556,7 +558,10 @@ func (c *DockerConfigurator) pullVideoRecorderImage() {
 
 func (c *DockerConfigurator) getFullyQualifiedImageRef(ref string) string {
 	if c.registryHost != "" {
-		return fmt.Sprintf("%s/%s", c.registryHost, ref)
+		if c.ImagePrefix != "" {
+			return fmt.Sprintf("%s/%s/%s", c.registryHost, c.ImagePrefix, ref)
+		}
+		return fmt.Sprintf("%s/%s", c.registryHost, ref)	
 	}
 	return ref
 }

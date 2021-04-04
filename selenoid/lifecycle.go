@@ -28,6 +28,7 @@ type LifecycleConfig struct {
 	// Docker specific
 	LastVersions int
 	RegistryUrl  string
+	ImagePrefix  string
 	BrowsersJson string
 	ShmSize      int
 	Tmpfs        int
